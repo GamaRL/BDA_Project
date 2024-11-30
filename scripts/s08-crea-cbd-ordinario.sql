@@ -38,11 +38,11 @@ CREATE DATABASE free
                 SIZE 50M
                 AUTOEXTEND OFF
         DEFAULT TEMPORARY TABLESPACE tempts1
-            TEMPFILE '/opt/oracle/oradata/FREE/temporary-01.dbf'
+            TEMPFILE '/opt/oracle/oradata/FREE/tempts1-01.dbf'
                 SIZE 20M
                 AUTOEXTEND ON NEXT 1M MAXSIZE 11G
         UNDO TABLESPACE undotbs1
-            DATAFILE '/opt/oracle/oradata/FREE/undotbs-01.dbf'
+            DATAFILE '/opt/oracle/oradata/FREE/undotbs1-01.dbf'
                 SIZE 100M
                 AUTOEXTEND ON NEXT 5M MAXSIZE 11G
     ENABLE PLUGGABLE DATABASE

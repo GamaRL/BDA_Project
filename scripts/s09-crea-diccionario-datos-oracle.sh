@@ -5,19 +5,19 @@
 
 #!/bin/bash
 
-# Comprueba que el script lo está ejecutando el usuario oracle.
+# Comprueba que el script lo está ejecutando el usuario oracle
 if [ "${USER}" != "oracle" ]; then
     echo "ERROR: El script lo debe de ejecutar el usuario oracle."
     exit 1
 fi;
 
-# Crea un directorio temporal.
+# Crea un directorio temporal
 mkdir /tmp/dd-logs
 
-# Accede al directorio.
+# Accede al directorio
 cd /tmp/dd-logs
 
-# Limpia el directorio.
+# Limpia el directorio
 echo "Para confirmar la eliminación del contenido de ${PWD} presione [ENTER], para dimitir [Ctrl + C]."
 read
 rm -rf *
@@ -31,7 +31,7 @@ $ORACLE_HOME/rdbms/admin/catcdb.pl \
 --logFilename dd.log \
 --logErrorsFilename dderror.log
 
-# Valida la creación del Diccionario de Datos
+# Válida la creación del Diccionario de Datos
 sqlplus -s sys/system3 as sysdba << EOF
 set serveroutput on
 exec dbms_dictionary_check.full
