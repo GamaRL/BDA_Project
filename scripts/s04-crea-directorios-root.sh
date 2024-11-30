@@ -20,6 +20,10 @@ numero_discos=27
 # Define los discos manejados como loop devices
 loop_devices=('d01' 'd02' 'd03')
 
+# Accede al directorio
+mkdir -p /unam/bda/proyecto/disks
+cd /unam/bda/proyecto/disks
+
 # Crea los discos excluyendo a los loop devices
 for ((i=0; i<=numero_discos; i++)); do
     # Define el nombre del disco
@@ -30,17 +34,14 @@ for ((i=0; i<=numero_discos; i++)); do
     fi;
 
     # Verifica si el disco está en loop_devices
-    if [[ " ${loop_devices[@]} " =~ " $disco " ]]; then
+    if [[ " ${loop_devices[@]} " =~ " ${disco} " ]]; then
         continue # Omite los discos que están en loop_devices
     fi;
 
-    # Verifica si el directorio ya existe
-    directorio="/unam/bda/proyecto/disks/${disco}"
-    if [ ! -d "$directorio" ]; then
-        mkdir -p "$directorio"
-        chown oracle:oinstall "$directorio"
-        chmod 750 "$directorio"
-    fi;
+    rm -rf "${disco}"
+    mkdir "${disco}"
+    chown oracle:oinstall "${disco}"
+    chmod 750 "${disco}"
 done;
 
 # Accede al directorio oracle
