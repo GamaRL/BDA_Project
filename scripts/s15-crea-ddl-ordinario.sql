@@ -1,17 +1,7 @@
--- NOMBRE
---  house_services_ddl.sql
---
--- FUNCIÓN
---  Genera el DDL de House Services
---
--- NOTAS
---  En servicio_contratacion no se especifica el constraint FK
---  para servicio_proveedor_id y tarjeta_cliente_id porque
---  pertenecen a otro módulo. 
---
--- HISTORIAL
---              Luis Arias          03/11/24        Creación de tablas
---              Luis Arias          04/11/24        Generación contraints para las PKs y FKs
+-- @Autor:          Luis Antonio Arias Quintero
+--                  Gamaliel Rios Lira
+-- @Fecha:          3 de diciembre de 2024
+-- @Descripcion     Crea las tablas de cada módulo
 
 WHENEVER SQLERROR EXIT ROLLBACK
 
