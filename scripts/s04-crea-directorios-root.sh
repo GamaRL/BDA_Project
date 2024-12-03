@@ -15,7 +15,7 @@ if [ "${user}" != "root" ]; then
 fi;
 
 # Define la cantidad de discos a simular en carpetas
-numero_discos=27
+numero_discos=31
 
 # Define los discos manejados como loop devices
 loop_devices=('d01' 'd02' 'd03')
@@ -33,13 +33,13 @@ for ((i=0; i<=numero_discos; i++)); do
         disco="d${i}"
     fi;
 
-    # Verifica si el disco está en loop_devices
-    if [[ " ${loop_devices[@]} " =~ " ${disco} " ]]; then
-        continue # Omite los discos que están en loop_devices
+    # Verifica si el disco no es loop_devices
+    if ! [[ " ${loop_devices[@]} " =~ " ${disco} " ]]; then
+        # Si no lo es, lo borra y vuelve a crear
+        rm -rf "${disco}"
+        mkdir "${disco}"
     fi;
 
-    rm -rf "${disco}"
-    mkdir "${disco}"
     chown oracle:oinstall "${disco}"
     chmod 750 "${disco}"
 done;
