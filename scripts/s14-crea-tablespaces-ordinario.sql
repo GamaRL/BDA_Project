@@ -15,4 +15,4 @@ CONNECT sys/system3@clientes AS sysdba
 
 -- Crea tablespaces para el módulo servicios
 CONNECT sys/system3@servicios AS sysdba
-@tablespaces/servicios
+@tablespaces/servicios.sql

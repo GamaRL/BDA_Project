@@ -1,23 +1,21 @@
 -- @Autor:          Luis Antonio Arias Quintero
 --                  Gamaliel Rios Lira
 -- @Fecha:          3 de diciembre de 2024
--- @Descripcion     Tablespaces para el módulo de proveedores
+-- @Descripcion     Tablespaces para el módulo de clientes
 
-drop tablespace if exists clientes_indexes_tbs including contents and datafiles;
-drop tablespace if exists clientes_blob_tbs including contents and datafiles;
-drop tablespace if exists clientes_hash_1_tbs including contents and datafiles;
-drop tablespace if exists clientes_hash_2_tbs including contents and datafiles;
-drop tablespace if exists clientes_hash_3_tbs including contents and datafiles;
-drop tablespace if exists clientes_tarjeta_tbs including contents and datafiles;
+drop tablespace if exists proveedores_indexes_tbs including contents and datafiles;
+drop tablespace if exists proveedores_blob_tbs including contents and datafiles;
+drop tablespace if exists proveedores_data_tbs including contents and datafiles;
+drop tablespace if exists proveedores_c_bancaria_tbs including contents and datafiles;
 
 --
--- Tablespace: clientes_indexes_tbs
+-- Tablespace: proveedores_indexes_tbs
 --
-create tablespace clientes_indexes_tbs
+create tablespace proveedores_indexes_tbs
     datafile
-        '/unam/bda/proyecto/disks/d09/clientes_indexes_01.dbf' size 50m,
-        '/unam/bda/proyecto/disks/d10/clientes_indexes_02.dbf' size 50m,
-        '/unam/bda/proyecto/disks/d11/clientes_indexes_03.dbf' size 50m
+        '/unam/bda/proyecto/disks/d04/proveedores_indexes_01.dbf' size 50m,
+        '/unam/bda/proyecto/disks/d05/proveedores_indexes_02.dbf' size 50m,
+        '/unam/bda/proyecto/disks/d06/proveedores_indexes_03.dbf' size 50m
     autoextend on next 1m maxsize 250m
     extent management local autoallocate
     segment space management auto
@@ -26,56 +24,30 @@ create tablespace clientes_indexes_tbs
 ;
 
 --
--- Tablespace: clientes_blob_tbs
+-- Tablespace: proveedores_blob_tbs
 --
-create bigfile tablespace clientes_blob_tbs
-    datafile '/unam/bda/proyecto/disks/d12/clientes_blob_01.dbf' size 500m
+create bigfile tablespace proveedores_blob_tbs
+    datafile '/unam/bda/proyecto/disks/d07/proveedores_blob_01.dbf' size 500m
     autoextend on next 5m maxsize 1g
     extent management local autoallocate
     segment space management auto
 ;
 
 --
--- Tablespace: clientes_hash_1_tbs
+-- Tablespace: proveedores_data_tbs
 --
-create bigfile tablespace clientes_hash_1_tbs
-    datafile '/unam/bda/proyecto/disks/d13/clientes_hash_1_01.dbf' size 500m
+create bigfile tablespace proveedores_data_tbs
+    datafile '/unam/bda/proyecto/disks/d08/proveedores_data_01.dbf' size 500m
     autoextend on next 5m maxsize 750m
     extent management local autoallocate
     segment space management auto
-    default
-        table compress for oltp
 ;
 
 --
--- Tablespace: clientes_hash_2_tbs
+-- Tablespace: proveedores_c_bancaria_tbs
 --
-create bigfile tablespace clientes_hash_2_tbs
-    datafile '/unam/bda/proyecto/disks/d14/clientes_hash_2_01.dbf' size 500m
-    autoextend on next 5m maxsize 750m
-    extent management local autoallocate
-    segment space management auto
-    default
-        table compress for oltp
-;
-
---
--- Tablespace: clientes_hash_3_tbs
---
-create bigfile tablespace clientes_hash_3_tbs
-    datafile '/unam/bda/proyecto/disks/d15/clientes_hash_3_01.dbf' size 500m
-    autoextend on next 5m maxsize 750m
-    extent management local autoallocate
-    segment space management auto
-    default
-        table compress for oltp
-;
-
---
--- Tablespace: clientes_tarjeta_tbs
---
-create bigfile tablespace clientes_tarjeta_tbs
-    datafile '/unam/bda/proyecto/disks/d16/clientes_tarjeta_01.dbf' size 500m
+create bigfile tablespace proveedores_c_bancaria_tbs
+    datafile '/unam/bda/proyecto/disks/d08/proveedores_c_bancaria_01.dbf' size 500m
     autoextend on next 5m maxsize 750m
     extent management local autoallocate
     segment space management auto
