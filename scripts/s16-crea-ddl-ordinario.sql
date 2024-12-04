@@ -10,15 +10,18 @@ PROMPT Módulo proveedores
 CONNECT sys/system3@proveedores AS sysdba
 @ddl/tablas/proveedores.sql
 @ddl/indices/proveedores.sql
+@ddl/sequencias/proveedores.sql
 
 -- Crea ddl para el módulo clientes
 PROMPT Módulo clientes
 CONNECT sys/system3@clientes AS sysdba
 @ddl/tablas/clientes.sql
 @ddl/indices/clientes.sql
+@ddl/sequencias/clientes.sql
 
 -- Crea ddl para el módulo servicios
 PROMPT Módulo servicios
 CONNECT sys/system3@servicios AS sysdba
 @ddl/tablas/servicios.sql
 @ddl/indices/servicios.sql
+@ddl/sequencias/servicios.sql
