@@ -31,13 +31,13 @@ TABLESPACE servicios_data_tbs
 -- Tabla: servicio_contratacion
 --
 CREATE TABLE servicio_contratacion(
-    servicio_contratacion_id            NUMBER(10,0)        NOT NULL,
-    fecha_servicio                      DATE                NOT NULL,
-    requerimientos_generales            VARCHAR2(1000)      NOT NULL,
-    documento_descripcion               BLOB                NOT NULL,
-    servicio_proveedor_id_fk            NUMBER(10,0)        NOT NULL,
-    tarjeta_cliente_id_fk               NUMBER(10,0)        NOT NULL,
-    status_servicio_contratacion_id     NUMBER(1,0)         NOT NULL,
+    servicio_contratacion_id            NUMBER(10,0)            NOT NULL,
+    fecha_servicio                      DATE DEFAULT SYSDATE    NOT NULL,
+    requerimientos_generales            VARCHAR2(1000)          NOT NULL,
+    documento_descripcion               BLOB                    NOT NULL,
+    servicio_proveedor_id_fk            NUMBER(10,0)            NOT NULL,
+    tarjeta_cliente_id_fk               NUMBER(10,0)            NOT NULL,
+    status_servicio_contratacion_id     NUMBER(1,0)             NOT NULL,
     CONSTRAINT servicio_contratacion_pk
         PRIMARY KEY(servicio_contratacion_id)
         USING INDEX TABLESPACE servicios_indexes_tbs
@@ -54,10 +54,10 @@ LOB(documento_descripcion) STORE AS SECUREFILE
 -- Tabla: historico_status_servicio
 --
 CREATE TABLE historico_status_servicio(
-    historico_status_servicio_id        NUMBER(10,0)    NOT NULL,
-    fecha_status                        TIMESTAMP       NOT NULL,
-    servicio_contratacion_id            NUMBER(10,0)    NOT NULL,
-    status_servicio_contratacion_id     NUMBER(1,0)     NOT NULL,
+    historico_status_servicio_id        NUMBER(10,0)                NOT NULL,
+    fecha_status                        TIMESTAMP DEFAULT SYSDATE   NOT NULL,
+    servicio_contratacion_id            NUMBER(10,0)                NOT NULL,
+    status_servicio_contratacion_id     NUMBER(1,0)                 NOT NULL,
     CONSTRAINT historico_status_servicio_pk
         PRIMARY KEY(historico_status_servicio_id)
         USING INDEX TABLESPACE servicios_indexes_tbs,
@@ -76,11 +76,11 @@ TABLESPACE servicios_historico_tbs
 -- Tabla: deposito_cuenta_proveedor
 --
 CREATE TABLE deposito_cuenta_proveedor(
-    deposito_cuenta_proveedor_id        NUMBER(10,0)    NOT NULL,
-    importe                             NUMBER(8,2)    NOT NULL,
-    fecha_deposito                      TIMESTAMP       NOT NULL,
-    comprobante_deposito                BLOB            NOT NULL,
-    servicio_contratacion_id            NUMBER(10,0)    NOT NULL,
+    deposito_cuenta_proveedor_id        NUMBER(10,0)                NOT NULL,
+    importe                             NUMBER(8,2)                 NOT NULL,
+    fecha_deposito                      TIMESTAMP DEFAULT SYSDATE   NOT NULL,
+    comprobante_deposito                BLOB                        NOT NULL,
+    servicio_contratacion_id            NUMBER(10,0)                NOT NULL,
     CONSTRAINT deposito_cuenta_proveedor_pk
         PRIMARY KEY(deposito_cuenta_proveedor_id)
         USING INDEX TABLESPACE servicios_indexes_tbs,
@@ -100,11 +100,11 @@ LOB(comprobante_deposito) STORE AS SECUREFILE
 -- Tabla: pago_servicio
 --
 CREATE TABLE pago_servicio(
-    servicio_contratacion_id    NUMBER(10,0)    NOT NULL,
-    numero_pago                 NUMBER(10,0)    NOT NULL,
-    fecha_cargo                 TIMESTAMP       NOT NULL,
-    importe                     NUMBER(8,2)     NOT NULL,
-    comision                    NUMBER(8,2)     NOT NULL,
+    servicio_contratacion_id    NUMBER(10,0)                NOT NULL,
+    numero_pago                 NUMBER(10,0)                NOT NULL,
+    fecha_cargo                 TIMESTAMP DEFAULT SYSDATE   NOT NULL,
+    importe                     NUMBER(8,2)                 NOT NULL,
+    comision                    NUMBER(8,2)                 NOT NULL,
     CONSTRAINT pago_servicio_pk
         PRIMARY KEY(servicio_contratacion_id, numero_pago)
         USING INDEX TABLESPACE servicios_indexes_tbs,
