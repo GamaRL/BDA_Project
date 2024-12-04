@@ -51,8 +51,8 @@ CREATE TABLE proveedor(
     fecha_nacimiento                DATE            NOT NULL,
     direccion                       VARCHAR2(150)   NOT NULL,
     email                           VARCHAR2(30)    NOT NULL,
-    telefono_casa                   VARCHAR2(10)    NOT NULL,
-    telefono_movil                  VARCHAR2(10)    NOT NULL,
+    telefono_casa                   VARCHAR2(12)    NOT NULL,
+    telefono_movil                  VARCHAR2(12)    NOT NULL,
     identificacion                  BLOB            NOT NULL,
     comprobante_domicilio           BLOB            NOT NULL,
     entidad_nacimiento_id           NUMBER(2,0)     NOT NULL,
@@ -65,7 +65,18 @@ CREATE TABLE proveedor(
     CONSTRAINT proveedor_nivel_escolaridad_id_fk
         FOREIGN KEY(nivel_escolaridad_id) REFERENCES nivel_escolaridad(nivel_escolaridad_id),
     CONSTRAINT proveedor_proveedor_representande_id_fk
-        FOREIGN KEY(proveedor_representante_id) REFERENCES proveedor(proveedor_id)
+        FOREIGN KEY(proveedor_representante_id) REFERENCES proveedor(proveedor_id),
+    CONSTRAINT proveedor_email_chk CHECK(
+        REGEXP_LIKE(
+            email, '^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|mil)$'
+        )
+    ),
+    CONSTRAINT proveedor_telefono_casa_chk CHECK(
+        REGEXP_LIKE(telefono_casa, '^\d{12}$')
+    ),
+    CONSTRAINT proveedor_telefono_movil_chk CHECK(
+        REGEXP_LIKE(telefono_movil, '^\d{12}$')
+    )
 )
 PCTFREE 10
 TABLESPACE proveedores_data_tbs

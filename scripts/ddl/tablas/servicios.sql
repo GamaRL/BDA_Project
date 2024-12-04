@@ -21,7 +21,18 @@ CREATE TABLE status_servicio_contratacion(
     descripcion                             VARCHAR2(250)       NOT NULL,
     CONSTRAINT status_servicio_contratacion_pk
         PRIMARY KEY(status_servicio_contratacion_id)
-        USING INDEX TABLESPACE servicios_indexes_tbs
+        USING INDEX TABLESPACE servicios_indexes_tbs,
+    CONSTRAINT status_servicio_contratacion_nombre_status_chk CHECK(
+        nombre_status IN(
+            'REGISTRADO',
+            'ACEPTADO',
+            'POR PAGAR',
+            'PAGADO',
+            'EN EJECUCIÓN',
+            'FINALIZADO',
+            'RECHAZADO'
+        )
+    )
 )
 PCTFREE 10
 TABLESPACE servicios_data_tbs
@@ -31,13 +42,13 @@ TABLESPACE servicios_data_tbs
 -- Tabla: servicio_contratacion
 --
 CREATE TABLE servicio_contratacion(
-    servicio_contratacion_id            NUMBER(10,0)            NOT NULL,
-    fecha_servicio                      DATE DEFAULT SYSDATE    NOT NULL,
-    requerimientos_generales            VARCHAR2(1000)          NOT NULL,
-    documento_descripcion               BLOB                    NOT NULL,
-    servicio_proveedor_id_fk            NUMBER(10,0)            NOT NULL,
-    tarjeta_cliente_id_fk               NUMBER(10,0)            NOT NULL,
-    status_servicio_contratacion_id     NUMBER(1,0)             NOT NULL,
+    servicio_contratacion_id            NUMBER(10,0)                NOT NULL,
+    fecha_servicio                      TIMESTAMP DEFAULT SYSDATE   NOT NULL,
+    requerimientos_generales            VARCHAR2(1000)              NOT NULL,
+    documento_descripcion               BLOB                        NOT NULL,
+    servicio_proveedor_id_fk            NUMBER(10,0)                NOT NULL,
+    tarjeta_cliente_id_fk               NUMBER(10,0)                NOT NULL,
+    status_servicio_contratacion_id     NUMBER(1,0)                 NOT NULL,
     CONSTRAINT servicio_contratacion_pk
         PRIMARY KEY(servicio_contratacion_id)
         USING INDEX TABLESPACE servicios_indexes_tbs

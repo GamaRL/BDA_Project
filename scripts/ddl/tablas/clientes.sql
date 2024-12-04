@@ -17,11 +17,25 @@ CREATE TABLE cliente(
     username            VARCHAR2(15)            NOT NULL,
     contrasena          VARCHAR2(16)            NOT NULL,
     email               VARCHAR2(30)            NOT NULL,
-    telefono            VARCHAR2(10)            NOT NULL,
+    telefono            VARCHAR2(12)            NOT NULL,
     direccion           VARCHAR2(100)           NOT NULL,
     tipo                CHAR(1)                 NOT NULL,
     CONSTRAINT cliente_pk PRIMARY KEY(cliente_id)
-        USING INDEX TABLESPACE clientes_indexes_tbs
+        USING INDEX TABLESPACE clientes_indexes_tbs,
+    CONSTRAINT cliente_email_chk CHECK(
+        REGEXP_LIKE(
+            email, '^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|mil)$'
+        )
+    ),
+    CONSTRAINT cliente_telefono_chk CHECK(
+        REGEXP_LIKE(telefono, '^\d{12}$')
+    ),
+    CONSTRAINT cliente_tipo_chk CHECK(
+        tipo IN(
+            'E',
+            'P'
+        )
+    )
 )
 PCTFREE 10
 PARTITION BY HASH(cliente_id)
