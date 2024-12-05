@@ -26,27 +26,26 @@ GRANT sysbackup TO c##hs_backup_admin
 CONNECT sys/system3@proveedores AS sysdba
 
 -- Crea un usuario local para la PDB proveedores
-DROP USER IF EXISTS hs_proovedores_admin CASCADE;
-CREATE USER hs_proovedores_admin
+DROP USER IF EXISTS hs_proveedores_admin CASCADE;
+CREATE USER hs_proveedores_admin
     IDENTIFIED BY hs;
 
 -- Define el tablespace por defecto del usuario anterior
-ALTER USER hs_proovedores_admin DEFAULT TABLESPACE proveedores_data_tbs;
+ALTER USER hs_proveedores_admin DEFAULT TABLESPACE proveedores_data_tbs;
 
 -- Asigna quotas al usuario anterior
-ALTER USER hs_proovedores_admin QUOTA unlimited ON proveedores_indexes_tbs;
-ALTER USER hs_proovedores_admin QUOTA unlimited ON proveedores_blob_tbs;
-ALTER USER hs_proovedores_admin QUOTA unlimited ON proveedores_data_tbs;
-ALTER USER hs_proovedores_admin QUOTA unlimited ON proveedores_c_bancaria_tbs;
+ALTER USER hs_proveedores_admin QUOTA unlimited ON proveedores_indexes_tbs;
+ALTER USER hs_proveedores_admin QUOTA unlimited ON proveedores_blob_tbs;
+ALTER USER hs_proveedores_admin QUOTA unlimited ON proveedores_data_tbs;
+ALTER USER hs_proveedores_admin QUOTA unlimited ON proveedores_c_bancaria_tbs;
 
 -- Asigna privilegios al usuario anterior
 GRANT
     create session,
     create sequence,
     create procedure,
-    create table,
-    create any index
-TO hs_proovedores_admin;
+    create table
+TO hs_proveedores_admin;
 
 
 
@@ -59,7 +58,7 @@ CREATE USER hs_clientes_admin
     IDENTIFIED BY hs;
 
 -- Define el tablespace por defecto del usuario anterior
-ALTER USER hs_clientes_admin DEFAULT TABLESPACE clientes_hash_1_tbs;
+ALTER USER hs_clientes_admin DEFAULT TABLESPACE clientes_data_tbs;
 
 -- Asigna quotas al usuario anterior
 ALTER USER hs_clientes_admin QUOTA unlimited ON clientes_indexes_tbs;
@@ -67,6 +66,7 @@ ALTER USER hs_clientes_admin QUOTA unlimited ON clientes_blob_tbs;
 ALTER USER hs_clientes_admin QUOTA unlimited ON clientes_hash_1_tbs;
 ALTER USER hs_clientes_admin QUOTA unlimited ON clientes_hash_2_tbs;
 ALTER USER hs_clientes_admin QUOTA unlimited ON clientes_hash_3_tbs;
+ALTER USER hs_clientes_admin QUOTA unlimited ON clientes_data_tbs;
 ALTER USER hs_clientes_admin QUOTA unlimited ON clientes_tarjeta_tbs;
 
 -- Asigna privilegios al usuario anterior
@@ -74,8 +74,7 @@ GRANT
     create session,
     create sequence,
     create procedure,
-    create table,
-    create any index
+    create table
 TO hs_clientes_admin;
 
 
@@ -104,6 +103,5 @@ GRANT
     create session,
     create sequence,
     create procedure,
-    create table,
-    create any index
+    create table
 TO hs_servicios_admin;

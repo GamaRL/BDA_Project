@@ -66,13 +66,7 @@ LOB(logotipo) STORE AS SECUREFILE
     empresa_logotipo(
         TABLESPACE clientes_blob_tbs
     )
-PARTITION BY HASH(cliente_id)
-    PARTITIONS 3
-    STORE IN(
-        clientes_hash_1_tbs,
-        clientes_hash_2_tbs,
-        clientes_hash_3_tbs
-    )
+PARTITION BY REFERENCE(empresa_cliente_id_fk)
 ;
 
 --
@@ -94,13 +88,7 @@ LOB(foto) STORE AS SECUREFILE
     persona_foto(
         TABLESPACE clientes_blob_tbs
     )
-PARTITION BY HASH(cliente_id)
-    PARTITIONS 3
-    STORE IN(
-        clientes_hash_1_tbs,
-        clientes_hash_2_tbs,
-        clientes_hash_3_tbs
-    )
+PARTITION BY REFERENCE(persona_cliente_id_fk)
 ;
 
 --

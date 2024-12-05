@@ -20,10 +20,7 @@ DROP INDEX IF EXISTS multimedia_promocion_formato_multimedia_ix;
 --
 -- Índices: status_servicio_contratacion
 --
--- ¿Conviene este?
-CREATE UNIQUE INDEX status_servicio_contratacion_nombre_status_iuk
-    ON status_servicio_contratacion(nombre_status)
-    TABLESPACE servicios_indexes_tbs;
+
 
 --
 -- Índices: servicio_contratacion
@@ -38,11 +35,6 @@ CREATE INDEX servicio_contratacion_servicio_proveedor_id_fk_ix
 
 CREATE INDEX servicio_contratacion_tarjeta_cliente_id_fk_ix
     ON servicio_contratacion(tarjeta_cliente_id_fk)
-    TABLESPACE servicios_indexes_tbs;
-
--- ¿Conviene este?
-CREATE INDEX servicio_contratacion_ix
-    ON servicio_contratacion(servicio_proveedor_id_fk, tarjeta_cliente_id_fk)
     TABLESPACE servicios_indexes_tbs;
 
 CREATE INDEX servicio_contratacion_status_servicio_contratacion_id_ix

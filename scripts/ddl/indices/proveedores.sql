@@ -38,10 +38,6 @@ CREATE UNIQUE INDEX entidad_clave_entidad_iuk
 --
 -- Índices: nivel_escolaridad
 --
--- ¿Conviene este?
-CREATE UNIQUE INDEX nivel_escolaridad_grado_escolaridad_iuk
-    ON nivel_escolaridad(grado_escolaridad)
-    TABLESPACE proveedores_indexes_tbs;
 
 --
 -- Índices: proveedor
@@ -93,10 +89,6 @@ CREATE INDEX proveedor_proveedor_representante_id_ix
 --
 -- Índices: cuenta_bancaria
 --
--- ¿Conviene este?
-CREATE INDEX cuenta_bancaria_banco_ix
-    ON cuenta_bancaria(banco)
-    TABLESPACE proveedores_indexes_tbs;
 
 --
 -- Índices: tipo_servicio
@@ -108,16 +100,7 @@ CREATE INDEX tipo_servicio_nombre_servicio_ix
 --
 -- Índices: servicio_proveedor
 --
-CREATE INDEX servicio_proveedor_proveedor_id_ix
-    ON servicio_proveedor(proveedor_id)
-    TABLESPACE proveedores_indexes_tbs;
-
-CREATE INDEX servicio_proveedor_tipo_servicio_id_ix
-    ON servicio_proveedor(tipo_servicio_id)
-    TABLESPACE proveedores_indexes_tbs;
-
--- ¿Conviene este?
-CREATE INDEX servicio_proveedor_ix
+CREATE UNIQUE INDEX servicio_proveedor_iuk
     ON servicio_proveedor(proveedor_id, tipo_servicio_id)
     TABLESPACE proveedores_indexes_tbs;
 

@@ -40,7 +40,6 @@ CREATE INDEX cliente_telefono_ix
 --
 -- Índices: empresa
 --
--- ¿Conviene este?
 CREATE UNIQUE INDEX empresa_nombre_iuk
     ON empresa(nombre)
     TABLESPACE clientes_indexes_tbs;
@@ -55,16 +54,10 @@ CREATE INDEX persona_fecha_nacimiento_ix
 --
 -- Índices: tarjeta_cliente
 --
--- ¿Convienen estos dos o unificarlos?
 CREATE INDEX tarjeta_cliente_anio_expiracion_ix
     ON tarjeta_cliente(anio_expiracion)
     TABLESPACE clientes_indexes_tbs;
 
 CREATE INDEX tarjeta_cliente_mes_expiracion_ix
     ON tarjeta_cliente(mes_expiracion)
-    TABLESPACE clientes_indexes_tbs;
-
--- ¿Conviene este?
-CREATE INDEX tarjeta_cliente_banco_ix
-    ON tarjeta_cliente(banco)
     TABLESPACE clientes_indexes_tbs;

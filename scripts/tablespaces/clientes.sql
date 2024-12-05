@@ -8,6 +8,7 @@ drop tablespace if exists clientes_blob_tbs including contents and datafiles;
 drop tablespace if exists clientes_hash_1_tbs including contents and datafiles;
 drop tablespace if exists clientes_hash_2_tbs including contents and datafiles;
 drop tablespace if exists clientes_hash_3_tbs including contents and datafiles;
+drop tablespace if exists clientes_data_tbs including contents and datafiles;
 drop tablespace if exists clientes_tarjeta_tbs including contents and datafiles;
 
 --
@@ -69,6 +70,16 @@ create bigfile tablespace clientes_hash_3_tbs
     segment space management auto
     default
         table compress for oltp
+;
+
+--
+-- Tablespace: clientes_data_tbs
+--
+create bigfile tablespace clientes_data_tbs
+    datafile '/unam/bda/proyecto/disks/d16/clientes_data_01.dbf' size 50m
+    autoextend on next 1m maxsize 100m
+    extent management local autoallocate
+    segment space management auto
 ;
 
 --
