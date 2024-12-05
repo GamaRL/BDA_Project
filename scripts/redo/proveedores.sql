@@ -1,4 +1,4 @@
-CONNECT hs_proveedor_admin/hs@proveedor;
+CONNECT hs_proveedores_admin/hs@proveedor;
 
 -- TRUNCATE: Limpiar tablas para evitar conflictos con claves foráneas
 -- TRUNCATE TABLE comprobante_experiencia;
