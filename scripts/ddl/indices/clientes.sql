@@ -51,6 +51,10 @@ CREATE INDEX persona_fecha_nacimiento_ix
     ON persona(TO_CHAR(fecha_nacimiento, 'mm/yyyy'))
     TABLESPACE clientes_indexes_tbs;
 
+CREATE UNIQUE INDEX persona_curp_ik
+    ON persona(curp)
+    TABLESPACE clientes_indexes_tbs;
+
 --
 -- Índices: tarjeta_cliente
 --

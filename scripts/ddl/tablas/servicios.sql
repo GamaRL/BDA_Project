@@ -43,9 +43,10 @@ TABLESPACE servicios_data_tbs
 --
 CREATE TABLE servicio_contratacion(
     servicio_contratacion_id            NUMBER(10,0)                NOT NULL,
-    fecha_servicio                      TIMESTAMP DEFAULT SYSDATE   NOT NULL,
+    fecha_servicio                      TIMESTAMP                   NOT NULL,
     requerimientos_generales            VARCHAR2(1000)              NOT NULL,
     documento_descripcion               BLOB                        NOT NULL,
+    fecha_status                        TIMESTAMP DEFAULT SYSDATE   NOT NULL,
     servicio_proveedor_id_fk            NUMBER(10,0)                NOT NULL,
     tarjeta_cliente_id_fk               NUMBER(10,0)                NOT NULL,
     status_servicio_contratacion_id     NUMBER(1,0)                 NOT NULL,
@@ -174,12 +175,12 @@ TABLESPACE servicios_data_tbs
 --
 CREATE TABLE multimedia_promocion(
     servicio_contratacion_id        NUMBER(10,0)        NOT NULL,
-    numero_multinedia               NUMBER(2,0)         NOT NULL,
+    numero_multimedia               NUMBER(2,0)         NOT NULL,
     archivo_multimedia              BLOB                NOT NULL,
     formato_multimedia              VARCHAR2(5)         NOT NULL,
     descripcion                     VARCHAR2(500)       NULL,
     CONSTRAINT multimedia_promocion_pk
-        PRIMARY KEY(servicio_contratacion_id, numero_multinedia)
+        PRIMARY KEY(servicio_contratacion_id, numero_multimedia)
         USING INDEX TABLESPACE servicios_indexes_tbs,
     CONSTRAINT multimedia_promocion_servicio_contratacion_id_pk
         FOREIGN KEY(servicio_contratacion_id)
