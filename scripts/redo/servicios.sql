@@ -23,12 +23,12 @@ BEGIN
             documento_descripcion, servicio_proveedor_id_fk, tarjeta_cliente_id_fk,
             status_servicio_contratacion_id
         ) VALUES (
-            v_servicio_contratacion_id, SYSDATE - i, 
-            'Requerimientos generales del servicio ' || i,
+            v_servicio_contratacion_id, SYSDATE, 
+            'Requerimientos generales del servicio ' || v_servicio_contratacion_id,
             EMPTY_BLOB(), 
-            MOD(i, 50) + 1, -- Simulando proveedores
-            MOD(i, 100) + 1, -- Simulando tarjetas de clientes
-            MOD(i, 7) + 1 -- Ciclando entre los 7 status
+            MOD(v_servicio_contratacion_id, 50) + 1, -- Simulando proveedores
+            MOD(v_servicio_contratacion_id, 100) + 1, -- Simulando tarjetas de clientes
+            MOD(v_servicio_contratacion_id, 7) + 1 -- Ciclando entre los 7 status
         );
 
         -- Insertar en "servicio_aceptacion_oferta"
@@ -38,8 +38,8 @@ BEGIN
         ) VALUES (
             v_servicio_contratacion_id, 
             ROUND(DBMS_RANDOM.VALUE(5000, 20000), 2), 
-            'Descripción de oferta para el servicio ' || i, 
-            CASE WHEN MOD(i, 2) = 0 THEN MOD(i, 12) ELSE NULL END,
+            'Descripción de oferta para el servicio ' || v_servicio_contratacion_id, 
+            CASE WHEN MOD(v_servicio_contratacion_id, 2) = 0 THEN MOD(v_servicio_contratacion_id, 12) ELSE NULL END,
             EMPTY_BLOB()
         );
 
@@ -48,8 +48,8 @@ BEGIN
             servicio_contratacion_id, comentario, calificacion
         ) VALUES (
             v_servicio_contratacion_id, 
-            'Comentario de calificación para el servicio ' || i, 
-            MOD(i, 5) + 1
+            'Comentario de calificación para el servicio ' || v_servicio_contratacion_id, 
+            MOD(v_servicio_contratacion_id, 5) + 1
         );
 
         -- Insertar en "deposito_cuenta_proveedor"
@@ -59,7 +59,7 @@ BEGIN
         ) VALUES (
             v_servicio_contratacion_id,
             ROUND(DBMS_RANDOM.VALUE(1000, 5000), 2),
-            SYSDATE - i,
+            SYSDATE,
             EMPTY_BLOB(),
             v_servicio_contratacion_id
         );
@@ -73,7 +73,7 @@ BEGIN
             ) VALUES (
                 v_servicio_contratacion_id, 
                 j, 
-                SYSDATE - i, 
+                SYSDATE, 
                 ROUND(DBMS_RANDOM.VALUE(500, 3000), 2), 
                 ROUND(DBMS_RANDOM.VALUE(50, 200), 2)
             );
@@ -94,7 +94,7 @@ BEGIN
                     WHEN 1 THEN 'PNG'
                     WHEN 2 THEN 'MP4'
                 END, 
-                'Archivo multimedia ' || i || '-' || k
+                'Archivo multimedia ' || v_servicio_contratacion_id || '-' || k
             );
         END LOOP;
 
@@ -106,9 +106,9 @@ BEGIN
                 servicio_contratacion_id, status_servicio_contratacion_id
             ) VALUES (
                 historico_status_servicio_id_seq.NEXTVAL, 
-                SYSDATE - (i + l), 
+                SYSDATE, 
                 v_servicio_contratacion_id, 
-                MOD(i + l, 7) + 1
+                MOD(v_servicio_contratacion_id + l, 7) + 1
             );
         END LOOP;
     END LOOP;
