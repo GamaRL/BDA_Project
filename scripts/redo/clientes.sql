@@ -23,25 +23,25 @@ BEGIN
             email, telefono, direccion, tipo
         )
         VALUES(
-            v_cliente_id, SYSDATE - MOD(i, 365), 
-            'user' || i, 'pass_' || LPAD(i, 4, '0'),
-            'email' || i || '@example.com', 
-            LPAD(i * 12345, 12, '0'), 
-            'Direccion_' || i, 
-            CASE WHEN MOD(i, 2) = 0 THEN 'E' ELSE 'P' END
+            v_cliente_id, SYSDATE, 
+            'user' || v_cliente_id, 'pass_' || LPAD(v_cliente_id, 4, '0'),
+            'email' || v_cliente_id || '@example.com', 
+            LPAD(v_cliente_id * 12345, 12, '0'), 
+            'Direccion_' || v_cliente_id, 
+            CASE WHEN MOD(v_cliente_id, 2) = 0 THEN 'E' ELSE 'P' END
         );
 
-        IF MOD(i, 2) = 0 THEN
+        IF MOD(v_cliente_id, 2) = 0 THEN
             -- Inserción en "empresa" si el tipo es 'E'
             INSERT INTO empresa(
                 cliente_id, nombre, descripcion, logotipo, numero_empleado
             )
             VALUES(
                 v_cliente_id, 
-                'Empresa_' || i, 
-                'Descripción de la empresa ' || i,
+                'Empresa_' || v_cliente_id, 
+                'Descripción de la empresa ' || v_cliente_id,
                 EMPTY_BLOB(), 
-                MOD(i, 1000) + 1
+                MOD(v_cliente_id, 1000) + 1
             );
 
         ELSE
@@ -51,15 +51,15 @@ BEGIN
             )
             VALUES(
                 v_cliente_id, 
-                'Nombre Persona ' || i, 
+                'Nombre Persona ' || v_cliente_id, 
                 EMPTY_BLOB(), 
-                LPAD(i * 987654321, 18, '0'), 
-                SYSDATE - (i * 1000)
+                LPAD(v_cliente_id * 987654321, 18, '0'), 
+                SYSDATE
             );
         END IF;
 
         -- Cantidad de inserciones en "tarjeta_cliente" por cada "cliente"
-        FOR j IN 1..MOD(i, 3) + 1 LOOP
+        FOR j IN 1..MOD(v_cliente_id, 3) + 1 LOOP
 
             -- Siguiente número de la secuencia tarjeta_cliente_id_seq
             SELECT tarjeta_cliente_id_seq.NEXTVAL INTO v_tarjeta_id FROM dual;
@@ -71,10 +71,10 @@ BEGIN
             ) VALUES (
                 v_tarjeta_id, 
                 LPAD(v_tarjeta_id * 54321, 16, '0'), 
-                2024 + MOD(j, 5), 
-                MOD(j, 12) + 1, 
-                MOD(j, 1000), 
-                'Banco_' || MOD(j, 10), 
+                2024 + MOD(v_tarjeta_id, 5), 
+                MOD(v_tarjeta_id, 12) + 1, 
+                MOD(v_tarjeta_id, 1000), 
+                'Banco_' || MOD(v_tarjeta_id, 10), 
                 v_cliente_id
             );
         END LOOP;

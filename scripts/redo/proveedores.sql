@@ -15,11 +15,12 @@ IS
 BEGIN
     FOR i IN 1..p_cantidad LOOP
 
+        SELECT proveedor_id_seq.NEXTVAL INTO l_proveedor_id FROM dual;
+
         -- Generar correo válido
-        l_email := 'email' || i || '@example.com';
+        l_email := 'email' || l_proveedor_id || '@example.com';
 
         -- Insertar en la tabla "proveedor"
-        SELECT proveedor_id_seq.NEXTVAL INTO l_proveedor_id FROM dual;
         INSERT INTO proveedor(
             proveedor_id, nombre, apellido_paterno, apellido_materno, 
             foto, fecha_nacimiento, direccion, email, telefono_casa, 
@@ -30,7 +31,7 @@ BEGIN
             l_proveedor_id, 'Nombre_' || l_proveedor_id, 
             'ApellidoP_' || l_proveedor_id, 
             'ApellidoM_' || l_proveedor_id,
-            EMPTY_BLOB(), SYSDATE - (l_proveedor_id * 365), 
+            EMPTY_BLOB(), SYSDATE, 
             'Direccion_' || l_proveedor_id, l_email,
             LPAD(l_proveedor_id, 12, '0'), LPAD(l_proveedor_id * 2, 12, '0'),
             EMPTY_BLOB(), EMPTY_BLOB(),

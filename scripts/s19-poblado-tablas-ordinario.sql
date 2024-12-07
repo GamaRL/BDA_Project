@@ -8,24 +8,20 @@ WHENEVER SQLERROR EXIT ROLLBACK
 -- Módulo proveedores
 PROMPT Módulo proveedores
 CONNECT hs_proveedores_admin/hs@proveedores
--- Lunes: 1000
--- Martes a Domingo: 100
 EXECUTE insertar_modulo_proveedores(1000);
 
 -- Módulo clientes
 PROMPT Módulo clientes
 CONNECT hs_clientes_admin/hs@clientes
--- Lunes: 1000
--- Martes a Domingo: 100
-EXECUTE insertar_modulo_clientes(1000);
+EXECUTE insertar_modulo_clientes(10000);
 
 -- Módulo servicios
 PROMPT Módulo servicios
 CONNECT hs_servicios_admin/hs@servicios
--- Lunes a viernes: 5000
--- Sábado: 2500
--- Domingo: 500
-EXECUTE insertar_modulo_servicios(5000);
+-- Lunes a Viernes: 5000
+-- Sábado: 7000
+-- Domingo: 3000
+EXECUTE insertar_modulo_servicios(3000);
 
 -- Conecta como sys en cdb$root
 CONNECT sys/system3 AS sysdba
