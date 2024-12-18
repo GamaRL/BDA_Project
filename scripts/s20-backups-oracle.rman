@@ -1,0 +1,109 @@
+# @Autor:           Luis Antonio Arias Quintero
+#                   Gamaliel Rios Lira
+# @Fecha:           5 de diciembre de 2024
+# @Descripcion:     Genera backups e image copies en la fra y dos discos
+
+# Conecta como c##hs_backup_admin en cdb$root
+CONNECT TARGET "c##hs_backup_admin/hs AS sysbackup";
+
+# Limpia las rutas
+DELETE OBSOLETE;
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK CLEAR;
+CONFIGURE CHANNEL DEVICE TYPE DISK CLEAR;
+
+RUN{
+# Configura el canal de la FRA
+ALLOCATE CHANNEL fra DEVICE TYPE DISK MAXPIECESIZE 1G;
+
+# Antes de insertar datos genera un full backup en la FRA
+# TAG: hs_full_bkp_<#backup>_c2
+#BACKUP DATABASE PLUS ARCHIVELOG TAG hs_full_bkp_1_fra;
+
+# Crea un backup incremental nivel 0 los lunes y viernes en la FRA
+# TAG: hs_bkp_in_lvl0_<lun | vie>_<#semana>_fra
+BACKUP AS BACKUPSET INCREMENTAL LEVEL 0 DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_lvl0_lun_1_fra;
+
+# Crea un backup incremental diferencial nivel 1 de martes a jueves en la FRA
+# TAG: hs_bkp_in_dif_lvl1_<mar | mie | jue>_<#semana>_fra
+#BACKUP AS BACKUPSET INCREMENTAL LEVEL 1 DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_dif_lvl1_mar_1_fra;
+
+# Crea un backup incremental cumulativo nivel 1 los domingos en la FRA
+# TAG: hs_bkp_in_cum_lvl1_dom_<#semana>_fra
+#BACKUP AS BACKUPSET INCREMENTAL LEVEL 1 CUMULATIVE DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_cum_lvl1_dom_1_fra;
+
+# Crea un image copy los lunes o viernes, según las necesidades, en la FRA
+# TAG: hs_full_copy_<lun | vie>_<#semana>_fra
+#BACKUP AS COPY DATABASE TAG hs_full_copy_lun_1_fra;
+
+RELEASE CHANNEL fra;
+
+}
+
+# Borra los backups obsoletos
+DELETE OBSOLETE;
+
+##################################################################################################################################
+
+# Habilita el respaldo automático del control file
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '/unam/bda/proyecto/disks/d30/ctl_file%F.bkp';
+
+##################################################################################################################################
+
+RUN{
+# Configura ruta y tamaño de los archivos a generar en el canal c1
+ALLOCATE CHANNEL c1 DEVICE TYPE DISK FORMAT='/unam/bda/proyecto/disks/d30/backup_%U.bkp' MAXPIECESIZE 1G;
+
+# Antes de insertar datos genera un full backup en el canal c1
+# TAG: hs_full_bkp_<#backup>_c1
+#BACKUP DATABASE PLUS ARCHIVELOG TAG hs_full_bkp_1_c1;
+
+# Crea un backup incremental nivel 0 los lunes y viernes en el canal c1
+# TAG: hs_bkp_in_lvl0_<lun | vie>_<#semana>_c1
+BACKUP AS BACKUPSET INCREMENTAL LEVEL 0 DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_lvl0_lun_1_c1;
+
+# Crea un backup incremental diferencial nivel 1 de martes a jueves en el canal c1
+# TAG: hs_bkp_in_dif_lvl1_<mar | mie | jue>_<#semana>_c1
+#BACKUP AS BACKUPSET INCREMENTAL LEVEL 1 DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_dif_lvl1_mar_1_c1;
+
+# Crea un backup incremental cumulativo nivel 1 los domingos en el canal c1
+# TAG: hs_bkp_in_cum_lvl1_dom_<#semana>_c1
+#BACKUP AS BACKUPSET INCREMENTAL LEVEL 1 CUMULATIVE DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_cum_lvl1_dom_1_c1;
+
+# Crea un image copy los lunes o viernes, según las necesidades en el canal c1
+# TAG: hs_full_copy_<lun | vie>_<#semana>_c1
+#BACKUP AS COPY DATABASE TAG hs_full_copy_lun_1_c1;
+
+RELEASE CHANNEL c1;
+}
+
+##################################################################################################################################
+
+RUN{
+# Configura ruta y tamaño de los archivos a generar en el canal c2
+ALLOCATE CHANNEL c2 DEVICE TYPE DISK FORMAT='/unam/bda/proyecto/disks/d31/backup_%U.bkp' MAXPIECESIZE 1G;
+
+# Antes de insertar datos genera un full backup en el canal c2
+# TAG: hs_full_bkp_<#backup>_c2
+#BACKUP DATABASE PLUS ARCHIVELOG TAG hs_full_bkp_1_c2;
+
+# Crea un backup incremental nivel 0 los lunes y viernes en el canal c2
+# TAG: hs_bkp_in_lvl0_<lun | vie>_<#semana>_c2
+BACKUP AS BACKUPSET INCREMENTAL LEVEL 0 DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_lvl0_lun_1_c2;
+
+# Crea un backup incremental diferencial nivel 1 de martes a jueves en el canal c2
+# TAG: hs_bkp_in_dif_lvl1_<mar | mie | jue>_<#semana>_C2
+#BACKUP AS BACKUPSET INCREMENTAL LEVEL 1 DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_dif_lvl1_mar_1_c2;
+
+# Crea un backup incremental cumulativo nivel 1 los domingos en el canal c2
+# TAG: hs_bkp_in_cum_lvl1_dom_<#semana>_c2
+#BACKUP AS BACKUPSET INCREMENTAL LEVEL 1 CUMULATIVE DATABASE PLUS ARCHIVELOG TAG hs_bkp_in_cum_lvl1_dom_1_c2;
+
+# Crea un image copy los lunes o viernes, según las necesidades en el canal c2
+# TAG: hs_full_copy_<lun | vie>_<#semana>_c2
+#BACKUP AS COPY DATABASE TAG hs_full_copy_lun_1_c2;
+
+RELEASE CHANNEL c2;
+}
+
+EXIT;
